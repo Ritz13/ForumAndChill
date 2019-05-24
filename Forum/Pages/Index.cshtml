@@ -1,0 +1,11 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+    <form method="post">
+        <h1>Welcome to UC Forum</h1>
+        <button type="submit" value="Login" asp-page-handler="Login">Login</button>
+        <button type="submit" value="Signup" asp-page-handler="Signup">Signup</button>
+    </form>

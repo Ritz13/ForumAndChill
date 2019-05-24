@@ -1,0 +1,31 @@
+﻿@page
+@model Forum.Pages.Home.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<button></button>
+
+<h2>Index</h2>
+
+<br>
+@foreach(var item in Model.context.Post.OrderByDescending(z => z.DatePosted))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @item.Title
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @item.Text
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
