@@ -11,14 +11,17 @@ namespace Forum.Pages.Posts
 {
     public class DetailsModel : PageModel
     {
-        private readonly Forum.Models.ForumContext _context;
+        private readonly Forum.Models.ForumContext context;
 
-        public DetailsModel(Forum.Models.ForumContext context)
+        public DetailsModel(Forum.Models.ForumContext _context)
         {
-            _context = context;
+            context = _context;
         }
 
         public Post Post { get; set; }
+
+        [BindProperty]
+        public string newCommentText { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,13 +30,35 @@ namespace Forum.Pages.Posts
                 return NotFound();
             }
 
-            Post = await _context.Post.FirstOrDefaultAsync(m => m.ID == id);
+            Post = await context.Post.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Post == null)
             {
                 return NotFound();
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            Comment newComment = new Comment();
+            newComment.Text = newCommentText;
+            context.Attach(Post).State = EntityState.Modified;
+
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }
