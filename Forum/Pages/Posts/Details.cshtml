@@ -5,33 +5,87 @@
     ViewData["Title"] = "Details";
 }
 
+<style>
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+
+
 <h2>Details</h2>
 
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Text)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.Text)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.DatePosted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Post.DatePosted)
-        </dd>
-    </dl>
-</div>
+<h2 style="font:bold">@Html.DisplayFor(model => model.Post.Title)</h2>
+<h4>@Html.DisplayFor(model => model.Post.Text)</h4>
+
+<br />
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Post.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Delete" asp-route-id="@Model.Post.ID">Delete</a> |
+    <a asp-page="./Index">Back to Home</a>
 </div>
+
+<br />
+<br />
+
+<button class="collapsible">Add a comment</button>
+<div class="content">
+    <form method="post">
+        <textarea asp-for="newCommentText"></textarea>
+        <input type="submit" value="Comment" asp-route-id="@Model.Post.ID"/>
+    </form>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+
+<br />
+<br />
+@if (Model.Comments.Count == 0)
+{
+    <p>There are no comments on this post</p>
+}
+else
+{
+    foreach (var item in Model.Comments.OrderBy(m => m.DatePosted))
+    {
+        var user = Model.Users.FirstOrDefault(m => m.ID == item.OPID);
+        <dt>@user.Username:</dt>
+        <dd>    @item.Text</dd>
+        <br />
+    }
+}
+

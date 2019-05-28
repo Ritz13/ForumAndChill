@@ -12,11 +12,11 @@ namespace Forum.Pages.Posts
 {
     public class EditModel : PageModel
     {
-        private readonly Forum.Models.ForumContext _context;
+        private readonly Forum.Models.ForumContext context;
 
-        public EditModel(Forum.Models.ForumContext context)
+        public EditModel(Forum.Models.ForumContext _context)
         {
-            _context = context;
+            context = _context;
         }
 
         [BindProperty]
@@ -29,7 +29,7 @@ namespace Forum.Pages.Posts
                 return NotFound();
             }
 
-            Post = await _context.Post.FirstOrDefaultAsync(m => m.ID == id);
+            Post = await context.Post.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Post == null)
             {
@@ -45,11 +45,11 @@ namespace Forum.Pages.Posts
                 return Page();
             }
 
-            _context.Attach(Post).State = EntityState.Modified;
+            context.Attach(Post).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -68,7 +68,7 @@ namespace Forum.Pages.Posts
 
         private bool PostExists(int id)
         {
-            return _context.Post.Any(e => e.ID == id);
+            return context.Post.Any(e => e.ID == id);
         }
     }
 }

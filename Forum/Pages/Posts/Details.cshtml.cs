@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Forum.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Forum.Pages.Posts
 {
@@ -18,7 +19,10 @@ namespace Forum.Pages.Posts
             context = _context;
         }
 
+
+        public IList<User> Users { get; set; }
         public Post Post { get; set; }
+        public IList<Comment> Comments { get; set; }
 
         [BindProperty]
         public string newCommentText { get; set; }
@@ -32,22 +36,36 @@ namespace Forum.Pages.Posts
 
             Post = await context.Post.FirstOrDefaultAsync(m => m.ID == id);
 
+
             if (Post == null)
             {
                 return NotFound();
             }
+
+            Comments = await context.Comment.Where(m => m.PostID == id).ToListAsync();
+            await context.SaveChangesAsync();
+
+            Users = await context.User.ToListAsync();
+            await context.SaveChangesAsync();
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            
             Comment newComment = new Comment();
             newComment.Text = newCommentText;
-            context.Attach(Post).State = EntityState.Modified;
+            newComment.OPID = HttpContext.Session.GetInt32("User");
+            newComment.PostID = id;
+            newComment.DatePosted = DateTime.Now;
+
+            context.Comment.Add(newComment);
+            await context.SaveChangesAsync();
 
             try
             {
@@ -58,7 +76,10 @@ namespace Forum.Pages.Posts
                 throw;
             }
 
-            return RedirectToPage("./Index");
+            IUrlHelper MyUrl = Url;
+            string My = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host.ToString() + HttpContext.Request.Path + HttpContext.Request.QueryString;
+            return Redirect(My);
         }
+
     }
 }

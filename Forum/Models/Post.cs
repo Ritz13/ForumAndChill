@@ -13,8 +13,8 @@ namespace Forum.Models
 
         public string Title { get; set; }
         public string Text { get; set; }
-        public List<Comment> Comments { get; set; }
-        public User OP { get; set; }
+        public int? OPID { get; set; }
+        public int Upvotes { get; set; }
         public DateTime DatePosted { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Forum.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Forum.Pages.Posts
 {
@@ -33,6 +34,7 @@ namespace Forum.Pages.Posts
                 return Page();
             }
             Post.DatePosted = DateTime.Now;
+            Post.OPID = HttpContext.Session.GetInt32("User");
 
             _context.Post.Add(Post);
             await _context.SaveChangesAsync();

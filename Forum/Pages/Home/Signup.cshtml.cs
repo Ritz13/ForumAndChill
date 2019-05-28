@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Forum.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Forum.Pages.Home
 {
@@ -38,6 +39,13 @@ namespace Forum.Pages.Home
             context.User.Add(User);
             await context.SaveChangesAsync();
 
+            int newUserID = 0;
+            foreach(User user in context.User)
+            {
+                if (user.Email == User.Email && user.DateCreated == User.DateCreated)
+                    newUserID = user.ID;
+            }
+            HttpContext.Session.SetInt32("User", newUserID);
             return Redirect("~/Posts/Index");
         }
     }

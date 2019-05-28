@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Forum.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Forum.Pages.Home
 {
@@ -36,6 +37,7 @@ namespace Forum.Pages.Home
             {
                 if(user.Username == User.Username && user.Password == User.Password)
                 {
+                    HttpContext.Session.SetInt32("User", user.ID);
                     return Redirect("~/Posts/Index");
                 }
             }
