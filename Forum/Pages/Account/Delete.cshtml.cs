@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Forum.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Forum.Pages.Account
 {
@@ -21,11 +22,12 @@ namespace Forum.Pages.Account
         [BindProperty]
         public User User { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
+            int? id = HttpContext.Session.GetInt32("User");
             if (id == null)
             {
-                return NotFound();
+                return Redirect("~/Home/Login");
             }
 
             User = await _context.User.FirstOrDefaultAsync(m => m.ID == id);

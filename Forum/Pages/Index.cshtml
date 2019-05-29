@@ -4,8 +4,64 @@
     ViewData["Title"] = "Home page";
 }
 
-    <form method="post">
-        <h1>Welcome to UC Forum</h1>
-        <button type="submit" value="Login" asp-page-handler="Login">Login</button>
-        <button type="submit" value="Signup" asp-page-handler="Signup">Signup</button>
-    </form>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Welcome to UC Forum</h4>
+                    </div>
+                    <div class="content">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="form-control" value="Login" asp-page-handler="Login" style="background-color:#a33030">
+                                            <p style="font:bold; color:white">Login</p>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="form-control" value="Signup" asp-page-handler="Signup" style="background-color:#a33030">
+                                            <p style="font:bold; color:white">Signup</p>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4">
+                <div class="card card-user">
+                    <div class="image">
+                        <img src="https://i.vimeocdn.com/portrait/2612602_300x300" alt="..."/>
+                    </div>
+                    <div class="content">
+                        <div class="author">
+                                <a href="#">
+                            <img class="avatar border-gray" src="https://i.vimeocdn.com/portrait/2612602_300x300" alt="..."/>
+
+                                <h4 class="title">Mike Blaney<br />
+                                    <small>michael24</small>
+                                </h4>
+                            </a>
+                        </div>
+                        <p class="description text-center"> "Habitual Smoker, <br>
+                                            Full-Time Daddy, <br>
+                                            Part-Time Streamer"
+                        </p>
+                    </div> -->
+            <hr>
+            <div class="text-center">
+                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

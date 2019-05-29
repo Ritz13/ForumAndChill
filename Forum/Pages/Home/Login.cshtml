@@ -4,20 +4,54 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Login</h4>
+                    </div>
+                    <div class="content">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="User.Username" class="control-label"></label>
+                                        <input id="inputLocation" asp-for="User.Username" class="form-control" required />
+                                        <span asp-validation-for="User.Username" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="User.Password" class="control-label"></label>
+                                        <input type="password" id="inputICW" asp-for="User.Password" class="form-control" required />
+                                        <span asp-validation-for="User.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="form-control" value="Login" style="background-color:#a33030">
+                                            <p style="font:bold; color:white">Login</p>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
 
-<form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="form-group">
-        <label asp-for="User.Username" class="control-label"></label>
-        <input id="inputLocation" asp-for="User.Username" class="form-control" required />
-        <span asp-validation-for="User.Username" class="text-danger"></span>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="User.Password" class="control-label"></label>
-        <input type="password" id="inputICW" asp-for="User.Password" class="form-control" required />
-        <span asp-validation-for="User.Password" class="text-danger"></span>
-    </div>
-    <button type="submit">Login</button>
-</form>
+</div>
